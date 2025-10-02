@@ -1,77 +1,70 @@
-# 📋 Technical Requirement Questions
+# 📋 Technical Requirement Questions (Including Power Automate)
 
-### 1. **Document Storage & Metadata**
+### 1. **Document Storage & Metadata (SharePoint)**
 
-* What document types (PDF, Word, Excel) will be uploaded and tracked?
-* Should we enforce a file naming convention?
-* Which metadata columns do we need in SharePoint (e.g., Status, AgreementId, Owner, SignedDate)?
-* Should version history be maintained for documents?
+* What metadata columns must Power Automate update (e.g., Status, SignedDate, AgreementId)?
+* Should flows automatically generate metadata (e.g., unique tracking IDs)?
+* Will Power Automate be responsible for moving signed files to an archive library or folder?
 
 ---
 
 ### 2. **E-Signature Integration**
 
-* Which e-signature provider do we plan to use (Adobe Sign, DocuSign, or Microsoft’s native integration)?
-* How many signers can a document have — single signer, multiple, or sequential routing?
-* Do we require signer authentication methods (e.g., email, SMS OTP)?
-* Should the signed copy replace the original file or be stored as a new version/document?
-* What happens if the document is declined or expires?
+* Which connector will we use in Power Automate (Adobe Sign, DocuSign, or Microsoft Purview eSign)?
+* Do we need custom API calls via **HTTP connector** if the standard connector doesn’t meet requirements?
+* Should Power Automate handle multi-signer scenarios (parallel vs sequential signing)?
+* Do we require storing **Adobe Sign transaction IDs** in SharePoint for auditing?
 
 ---
 
-### 3. **Workflow & Automation**
+### 3. **Flow Triggering & Automation**
 
-* Should the signature request be triggered **automatically** on upload, or **manually** by a user action (button/Flow)?
-* Do we need approval steps before sending for signature?
-* How should document status be updated in SharePoint (automated via Flow, or manual updates)?
-* Should reminders be sent automatically if a signer does not respond?
+* Should the flow trigger **automatically when a file is uploaded/modified** in SharePoint?
+* Do we want a **manual trigger** (e.g., “Send for Signature” button in SharePoint/Teams)?
+* Should Power Automate run **synchronously** (wait for results) or **asynchronously** (update status when complete)?
+* Do we need scheduled flows to check for expired agreements daily?
 
 ---
 
 ### 4. **Notifications & Tracking**
 
-* Which users should receive notifications (Owner, Signer, Admin)?
-* Should notifications be via **Teams Adaptive Cards**, **email alerts**, or both?
-* Do we need dashboards/reports to track signed/unsigned/expired documents?
-* Should SharePoint views use conditional formatting (e.g., color-coded statuses)?
+* What notification channels should Power Automate support (Teams Adaptive Cards, Outlook email, push notifications)?
+* Should Teams messages include **action buttons** (Approve/Reject, Open in SharePoint)?
+* Do we need centralized reporting (e.g., Power BI dashboard fed by Power Automate logs)?
+* Should flows log every transaction in a **separate SharePoint “Audit List”**?
 
 ---
 
-### 5. **Security & Compliance**
+### 5. **Security & Governance**
 
-* Who should have permission to upload/send documents for signature?
-* Should signed documents be locked from further edits in SharePoint?
-* Do we need audit trails (who uploaded, who signed, timestamps)?
-* Are there retention policies (e.g., keep signed docs for 7 years)?
+* Who can create or edit Power Automate flows (developers, power users, admins)?
+* Do we need **environment segregation** (Dev, Test, Prod) for flows?
+* Should sensitive data (e.g., signed PDFs, signer emails) be encrypted before being stored?
+* Will Power Automate use **service accounts** for running flows, or impersonate the uploader?
 
 ---
 
 ### 6. **Scalability & Performance**
 
-* How many documents per month do we expect to process?
-* Do we need bulk sending (e.g., send one contract to 100 recipients)?
-* Should the system handle multilingual documents (e.g., English, Tagalog)?
+* How many documents per day are expected to go through the flow?
+* Do we need **premium connectors** (Adobe Sign, DocuSign, etc.), and how many licenses are required?
+* Should Power Automate handle **bulk sends** (looping through multiple recipients)?
+* What retry policy should be configured for failed API calls (exponential backoff, custom retries)?
 
 ---
 
 ### 7. **Integration & Extensibility**
 
-* Should the solution integrate with other systems (ERP, CRM, HR)?
-* Do we need APIs exposed for external apps to fetch document status?
-* Should we allow mobile signing workflows?
+* Should Power Automate integrate with external apps (ERP/CRM/HR systems)?
+* Do we need to expose **Power Automate as an API endpoint** for external systems to initiate signing requests?
+* Should Power Automate push logs into **Dataverse** or a SQL DB for analytics?
+* Do we require custom connectors if Adobe Sign/DocuSign standard connectors lack features?
 
 ---
 
 ### 8. **Exception Handling**
 
-* What should happen if a signature request fails (e.g., Adobe Sign API error)?
-* How do we handle documents that are **rejected** or **expired**?
-* Should users be able to re-send expired requests?
-
----
-
-✅ These questions cover **functional, technical, and operational aspects** to make sure you don’t miss hidden requirements.
-
----
-
-Would you like me to also create a **requirements traceability matrix (RTM template)** for this project so you can track these questions against business needs and technical solutions?
+* How should Power Automate handle **failed API calls** (retry, alert admin, log to SharePoint)?
+* What should happen if a document is **declined or expired** — should Power Automate send reminders, update SharePoint, notify owners?
+* Should errors be logged to a **SharePoint list or monitoring dashboard** for admin review?
+* Should there be an **escalation workflow** if a document is not signed within a given SLA?
