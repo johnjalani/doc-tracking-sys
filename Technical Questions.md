@@ -1,5 +1,3 @@
----
-
 # 📋 Technical Requirement Questions
 
 ### 1. **Document Storage & Metadata**
