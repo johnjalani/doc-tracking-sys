@@ -1,0 +1,20 @@
+# .NET build output
+app/bin/
+app/obj/
+
+# Generated videos (too large for git)
+output/generated_videos/*.mp4
+output/generated_videos/*.webp
+output/generated_videos/*.webm
+
+# YouTube OAuth tokens
+tokens/
+client_secret.json
+
+# Logs
+logs/
+
+# IDE
+.vs/
+.vscode/
+*.user
